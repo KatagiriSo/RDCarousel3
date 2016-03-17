@@ -15,6 +15,9 @@
 		32554D6A1C9A439A001A189D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 32554D681C9A439A001A189D /* LaunchScreen.storyboard */; };
 		32554D751C9A439A001A189D /* RDCarousel3Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 32554D741C9A439A001A189D /* RDCarousel3Tests.m */; };
 		32554D801C9A439A001A189D /* RDCarousel3UITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 32554D7F1C9A439A001A189D /* RDCarousel3UITests.m */; };
+		32554D8F1C9A441C001A189D /* RDCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32554D8E1C9A441C001A189D /* RDCarousel.m */; settings = {ASSET_TAGS = (); }; };
+		32554D901C9A441C001A189D /* RDCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32554D8E1C9A441C001A189D /* RDCarousel.m */; settings = {ASSET_TAGS = (); }; };
+		32554D911C9A441C001A189D /* RDCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32554D8E1C9A441C001A189D /* RDCarousel.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +54,8 @@
 		32554D7B1C9A439A001A189D /* RDCarousel3UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RDCarousel3UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		32554D7F1C9A439A001A189D /* RDCarousel3UITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RDCarousel3UITests.m; sourceTree = "<group>"; };
 		32554D811C9A439A001A189D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		32554D8D1C9A441C001A189D /* RDCarousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDCarousel.h; sourceTree = "<group>"; };
+		32554D8E1C9A441C001A189D /* RDCarousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RDCarousel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +111,8 @@
 				32554D601C9A439A001A189D /* ViewController.h */,
 				32554D611C9A439A001A189D /* ViewController.m */,
 				32554D631C9A439A001A189D /* Main.storyboard */,
+				32554D8D1C9A441C001A189D /* RDCarousel.h */,
+				32554D8E1C9A441C001A189D /* RDCarousel.m */,
 				32554D661C9A439A001A189D /* Assets.xcassets */,
 				32554D681C9A439A001A189D /* LaunchScreen.storyboard */,
 				32554D6B1C9A439A001A189D /* Info.plist */,
@@ -273,6 +280,7 @@
 				32554D621C9A439A001A189D /* ViewController.m in Sources */,
 				32554D5F1C9A439A001A189D /* AppDelegate.m in Sources */,
 				32554D5C1C9A439A001A189D /* main.m in Sources */,
+				32554D8F1C9A441C001A189D /* RDCarousel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -281,6 +289,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				32554D751C9A439A001A189D /* RDCarousel3Tests.m in Sources */,
+				32554D901C9A441C001A189D /* RDCarousel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -289,6 +298,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				32554D801C9A439A001A189D /* RDCarousel3UITests.m in Sources */,
+				32554D911C9A441C001A189D /* RDCarousel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
