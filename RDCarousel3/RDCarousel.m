@@ -46,42 +46,38 @@ CGFloat space = 5.0f;
 
 - (void)updateContents:(NSArray *)contents
 {
-    self.contents = contents;
-    self.scrollView.contents = contents;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.contents = contents;
+            self.scrollView.contents = contents;
+            
+            if ([self.contents count] == 0) return;
+            
+            NSInteger count = [self.contents count];
+            UIView *sampleView = self.contents[0];
+            
+            // UIScrollView ContentzSize
+            CGFloat width = count * CGRectGetWidth(sampleView.frame) + space * count -1 + 5000;
+            CGFloat height = CGRectGetHeight(sampleView.frame);
+            self.scrollView.contentSize = CGSizeMake(width, height);
+            if (!self.scrollView.superview) {
+                [self addSubview:self.scrollView];
+            }
+            self.scrollView.contentView = self.contentView;
+            
+            self.contentView.frame =  CGRectMake(0, 0, width, height);
+            if (!self.contentView.superview) {
+                [self.scrollView addSubview:self.contentView];
+            }
+            
+            self.scrollView.showsHorizontalScrollIndicator = NO;
+            self.scrollView.clipsToBounds = YES;
+            self.contentView.clipsToBounds = YES;
+            
+        });
+    });
     
-    if ([self.contents count] == 0) return;
     
-    NSInteger count = [self.contents count];
-    UIView *sampleView = self.contents[0];
-    
-    // UIScrollView ContentzSize
-    CGFloat width = count * CGRectGetWidth(sampleView.frame) + space * count -1 + 5000;
-    CGFloat height = CGRectGetHeight(sampleView.frame);
-    self.scrollView.contentSize = CGSizeMake(width, height);
-    if (!self.scrollView.superview) {
-        [self addSubview:self.scrollView];
-    }
-    self.scrollView.contentView = self.contentView;
-    
-    self.contentView.frame =  CGRectMake(0, 0, width, height);
-    if (!self.contentView.superview) {
-        [self.scrollView addSubview:self.contentView];
-    }
-    
-    
-//    // put
-//    for (UIView *v in self.contents) {
-//        [self.contentView addSubview:v];
-//    }
-//    
-//    // arrange Contents
-//    CGFloat space = 5.0f;
-//    CGFloat x = 0;
-//    for (UIView *v in self.contents) {
-//        v.frame = CGRectMake(x, 0, CGRectGetWidth(v.frame), CGRectGetHeight(v.frame));
-//        x += space;
-//        x += CGRectGetWidth(v.frame);
-//    }
 }
 
 /*
@@ -97,6 +93,28 @@ CGFloat space = 5.0f;
 
 
 @implementation InfiniteScrollView
+
+- (id)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        [self setup];
+    }
+    return self;
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        [self setup];
+    }
+    return self;
+}
+
+- (void)setup
+{
+}
 
 - (NSMutableArray *)visibleViews
 {
