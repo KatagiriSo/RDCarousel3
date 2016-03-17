@@ -10,14 +10,19 @@
 
 CGFloat space = 5.0f;
 
+@protocol InfiniteScrollViewDelegate <NSObject>
+- (void)scrollView:(UIScrollView *)scrollView currentIndex:(NSInteger)index;
+@end
+
 // 無限スクロールは以下を参考にした。 WWDC2011 Advanced ScrollView Techniques
 @interface InfiniteScrollView : UIScrollView;
 @property (nonatomic, strong) NSMutableArray *visibleViews;
 @property (nonatomic, weak) NSArray *contents;
 @property (nonatomic, weak) UIView *contentView;
+@property (nonatomic,weak) id <InfiniteScrollViewDelegate> infDelegate;
 @end
 
-@interface RDCarousel()
+@interface RDCarousel() <InfiniteScrollViewDelegate>
 @property (nonatomic, strong) NSArray *contents;
 @property (nonatomic, strong) InfiniteScrollView *scrollView;
 @property (nonatomic, strong) UIView *contentView;
@@ -50,6 +55,7 @@ CGFloat space = 5.0f;
         dispatch_async(dispatch_get_main_queue(), ^{
             self.contents = contents;
             self.scrollView.contents = contents;
+            self.scrollView.infDelegate = self;
             
             if ([self.contents count] == 0) return;
             
@@ -87,6 +93,11 @@ CGFloat space = 5.0f;
     // Drawing code
 }
 */
+
+- (void)scrollView:(UIScrollView *)scrollView currentIndex:(NSInteger)index
+{
+    NSLog(@"currenIndex = %ld", index);
+}
 
 @end
 
@@ -199,6 +210,33 @@ CGFloat space = 5.0f;
         [first removeFromSuperview];
         [self.visibleViews removeObjectAtIndex:0];
         first = [self.visibleViews firstObject];
+    }
+    
+    
+    if ([self.visibleViews count] == 1) {
+        UIView *v = self.visibleViews[0];
+        NSInteger index = [self.contents indexOfObject:v];
+        [self.infDelegate scrollView:self currentIndex:index];
+    } else {
+        
+        UIView *v = self.visibleViews[0];
+        
+        CGRect frame = CGRectMake(self.center.x - v.frame.size.width/2, CGRectGetMinY(v.frame), v.frame.size.width, v.frame.size.height);
+        
+        UIView *center = nil;
+        for (UIView *v in self.visibleViews) {
+          //  v.alpha = 0.5;
+            CGRect vf = CGRectMake(v.frame.origin.x - self.contentOffset.x, CGRectGetMinY(v.frame), v.frame.size.width, v.frame.size.height);
+            if (CGRectIntersectsRect(vf, frame)) {
+                center = v;
+             //   center.alpha = 1.0;
+                break;
+            }
+        }
+        if (center) {
+            NSInteger index = [self.contents indexOfObject:center];
+            [self.infDelegate scrollView:self currentIndex:index];
+        }
     }
     
 }
