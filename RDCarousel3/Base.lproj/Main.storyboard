@@ -23,12 +23,25 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="323" id="t6k-j0-3Rc"/>
                                 </constraints>
+                                <connections>
+                                    <outlet property="pageControl" destination="gno-tm-KDG" id="MxB-Wx-iD2"/>
+                                </connections>
                             </view>
+                            <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="gno-tm-KDG">
+                                <rect key="frame" x="69" y="436" width="472" height="37"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="37" id="ErL-9a-cTe"/>
+                                </constraints>
+                            </pageControl>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Hj1-Xn-ker" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="27" id="0kz-8k-4I9"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="gno-tm-KDG" secondAttribute="bottom" constant="127" id="2R2-WB-Kw6"/>
                             <constraint firstItem="Hj1-Xn-ker" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="38" id="IHK-FG-1QM"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="gno-tm-KDG" secondAttribute="trailing" constant="39" id="chc-Dc-Zlf"/>
+                            <constraint firstItem="gno-tm-KDG" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="49" id="o2t-sy-nlU"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Hj1-Xn-ker" secondAttribute="trailing" constant="39" id="sL8-UG-9sP"/>
                         </constraints>
                     </view>

@@ -56,6 +56,7 @@ CGFloat space = 5.0f;
             self.contents = contents;
             self.scrollView.contents = contents;
             self.scrollView.infDelegate = self;
+            self.pageControl.numberOfPages = [self.contents count];
             
             if ([self.contents count] == 0) return;
             
@@ -97,6 +98,7 @@ CGFloat space = 5.0f;
 - (void)scrollView:(UIScrollView *)scrollView currentIndex:(NSInteger)index
 {
     NSLog(@"currenIndex = %ld", index);
+    self.pageControl.currentPage = index;
 }
 
 @end

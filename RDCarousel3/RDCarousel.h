@@ -10,6 +10,7 @@
 
 @interface RDCarousel : UIView
 @property (nonatomic, readonly) NSArray *contents;
+@property (nonatomic, weak) IBOutlet UIPageControl *pageControl;
 
 - (void)updateContents:(NSArray *)contents;
 
