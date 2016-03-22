@@ -16,6 +16,6 @@
 @property (nonatomic, readonly) NSArray *contents;
 @property (nonatomic, weak) IBOutlet UIPageControl *pageControl;
 
-- (void)updateContents:(NSArray *)contents;
+- (void)updateContents:(NSArray *)contents dummyNumber:(NSInteger)dummy;
 
 @end

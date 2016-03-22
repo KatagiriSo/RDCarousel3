@@ -51,14 +51,14 @@ CGFloat space = 5.0f;
 
 #pragma mark -
 
-- (void)updateContents:(NSArray *)contents
+- (void)updateContents:(NSArray *)contents dummyNumber:(NSInteger)dummy
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         dispatch_async(dispatch_get_main_queue(), ^{
             self.contents = contents;
             self.scrollView.contents = contents;
             self.scrollView.infDelegate = self;
-            self.pageControl.numberOfPages = [self.contents count];
+            self.pageControl.numberOfPages = [self.contents count] - dummy;
             
             if ([self.contents count] == 0) return;
             
@@ -100,7 +100,8 @@ CGFloat space = 5.0f;
 - (void)scrollView:(UIScrollView *)scrollView currentIndex:(NSInteger)index
 {
     NSLog(@"currenIndex = %ld", index);
-    self.pageControl.currentPage = index;
+    
+    self.pageControl.currentPage = index % self.pageControl.numberOfPages;
 }
 
 @end
@@ -176,6 +177,31 @@ CGFloat space = 5.0f;
 
 - (void)tileBuildingsFromMinX:(CGFloat)minX toMaxX:(CGFloat)maxX
 {
+
+    // 右側に飛び出しているViewを削除
+    {
+        if (self.visibleViews.count > 0) {
+            UIView *last = [self.visibleViews lastObject];
+            while ([last frame].origin.x > maxX && last) {
+                [last removeFromSuperview];
+                [self.visibleViews removeLastObject];
+                last = [self.visibleViews lastObject];
+            }
+        }
+    }
+    
+    // 左側に飛び出しているViewを削除
+    {
+        if (self.visibleViews.count > 0) {
+            UIView *first = [self.visibleViews firstObject];
+            while (CGRectGetMaxX(first.frame) < minX && first) {
+                [first removeFromSuperview];
+                [self.visibleViews removeObjectAtIndex:0];
+                first = [self.visibleViews firstObject];
+            }
+        }
+    }
+    
     // 1個もなければ１個は作っておく。
     if ([self.visibleViews count] == 0) {
         UIView *v = [self placeNewViewOnRight:minX refView:nil];
@@ -191,6 +217,7 @@ CGFloat space = 5.0f;
         [self.contentView addSubview:last];
         
     }
+    
     // 左側に付け加える
     UIView *first = [self.visibleViews firstObject];
     CGFloat leftEdge = CGRectGetMinX(first.frame);
@@ -200,21 +227,7 @@ CGFloat space = 5.0f;
         [self.contentView addSubview:first];
     }
     
-    // 右側に飛び出しているViewを削除
-    last = [self.visibleViews lastObject];
-    while ([last frame].origin.x > maxX) {
-        [last removeFromSuperview];
-        [self.visibleViews removeLastObject];
-        last = [self.visibleViews lastObject];
-    }
-    
-    // 左側に飛び出しているViewを削除
-    first = [self.visibleViews firstObject];
-    while (CGRectGetMaxX(first.frame) < minX) {
-        [first removeFromSuperview];
-        [self.visibleViews removeObjectAtIndex:0];
-        first = [self.visibleViews firstObject];
-    }
+
     
     
     if ([self.visibleViews count] == 1) {
@@ -229,11 +242,11 @@ CGFloat space = 5.0f;
         
         UIView *center = nil;
         for (UIView *v in self.visibleViews) {
-          //  v.alpha = 0.5;
+            //v.alpha = 0.5;
             CGRect vf = CGRectMake(v.frame.origin.x - self.contentOffset.x, CGRectGetMinY(v.frame), v.frame.size.width, v.frame.size.height);
             if (CGRectIntersectsRect(vf, frame)) {
                 center = v;
-             //   center.alpha = 1.0;
+                //center.alpha = 1.0;
                 break;
             }
         }

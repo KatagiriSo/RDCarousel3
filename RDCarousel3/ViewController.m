@@ -15,17 +15,34 @@
 @property (nonatomic, weak) IBOutlet RDCarousel *carousel;
 @end
 
-@implementation ViewController
+@interface View:UIView
+@end
+@implementation View:UIView
+- (id)copy
+{
+    View *v = [[View alloc] initWithFrame:self.frame];
+    UILabel *sl = (UILabel *)[self viewWithTag:999];
+    UILabel *l = [[UILabel alloc] initWithFrame:sl.frame];
+    l.text = sl.text;
+    l.tag = 999;
+    v.backgroundColor = self.backgroundColor;
+    
+    [v addSubview:l];
+    return v;
+}
+@end
 
+@implementation ViewController
 
 - (UIView *)makeView
 {
     static int i=0;
-    UIView *v = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
+    View *v = [[View alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
     v.backgroundColor = [UIColor purpleColor];
     UILabel *l = [[UILabel alloc] initWithFrame:v.bounds];
     l.text = [NSString stringWithFormat:@"%d",i];
     i++;
+    l.tag = 999;
     [v addSubview:l];
     return v;
 }
@@ -35,12 +52,42 @@
     // Do any additional setup after loading the view, typically from a nib.
     
     NSMutableArray *list = [NSMutableArray array];
-    for (int i=0;i<20;i++)
+    for (int i=0;i<30;i++)
     {
         [list addObject:[self makeView]];
     }
     
-    [self.carousel updateContents:list];
+    NSMutableArray *copylist = [NSMutableArray array];
+    
+    NSInteger listCount = [list count];
+    
+    if (listCount < 10) {
+        for (NSInteger i = 0;i<10;i++) {
+            NSInteger index = i % list.count;
+            UIView *v = [list[index] copy];
+            [copylist addObject:v];
+        }
+    } else {
+        
+        for (NSInteger i=0;i<listCount;i++) {
+            NSInteger index = i % listCount;
+            UIView *v = [list[index] copy];
+            [copylist addObject:v];
+        }
+//        // 前後３みつだけダミーに
+//        NSInteger dum = 5;
+//        for (int i=0;i<dum;i++) {
+//            [copylist addObject:[list[i] copy]];
+//        }
+//        for (int i=0;i<dum;i++) {
+//            NSInteger index = list.count - dum - 1 + i;
+//            [copylist addObject:[list[index] copy]];
+//        }
+    }
+    [list addObjectsFromArray:copylist];
+ 
+    
+    [self.carousel updateContents:list dummyNumber:[copylist count]];
 }
 
 - (void)didReceiveMemoryWarning {
