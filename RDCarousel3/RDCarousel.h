@@ -12,10 +12,13 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol CopyProtocol <NSObject>
+- (id)copy;
+@end
+
 @interface RDCarousel : UIView
 @property (nonatomic, readonly) NSArray *contents;
 @property (nonatomic, weak) IBOutlet UIPageControl *pageControl;
 
-- (void)updateContents:(NSArray *)contents dummyNumber:(NSInteger)dummy;
-
+- (void)updateContents:(NSArray<UIView<CopyProtocol>*> *)contents;
 @end

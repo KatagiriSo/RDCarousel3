@@ -51,6 +51,44 @@ CGFloat space = 5.0f;
 
 #pragma mark -
 
+- (void)updateContents:(NSArray<UIView<CopyProtocol> *> *)list
+{
+    NSInteger listCount = [list count];
+    
+    NSMutableArray *copylist = [NSMutableArray array];
+    if (listCount < 10) {
+        for (NSInteger i = 0;i<10;i++) {
+            NSInteger index = i % list.count;
+            UIView *v = [list[index] copy];
+            [copylist addObject:v];
+        }
+    } else {
+        
+        for (NSInteger i=0;i<listCount;i++) {
+            NSInteger index = i % listCount;
+            UIView *v = [list[index] copy];
+            [copylist addObject:v];
+        }
+        //        // 前後３みつだけダミーに
+        //        NSInteger dum = 5;
+        //        for (int i=0;i<dum;i++) {
+        //            [copylist addObject:[list[i] copy]];
+        //        }
+        //        for (int i=0;i<dum;i++) {
+        //            NSInteger index = list.count - dum - 1 + i;
+        //            [copylist addObject:[list[index] copy]];
+        //        }
+    }
+    
+    NSMutableArray *reslist = [NSMutableArray array];
+    [reslist addObjectsFromArray:list];
+    [reslist addObjectsFromArray:copylist];
+    
+    
+    [self updateContents:reslist dummyNumber:[copylist count]];
+
+}
+
 - (void)updateContents:(NSArray *)contents dummyNumber:(NSInteger)dummy
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{

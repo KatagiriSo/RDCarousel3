@@ -56,39 +56,9 @@
     {
         [list addObject:[self makeView]];
     }
-    
-    NSMutableArray *copylist = [NSMutableArray array];
-    
-    NSInteger listCount = [list count];
-    
-    if (listCount < 10) {
-        for (NSInteger i = 0;i<10;i++) {
-            NSInteger index = i % list.count;
-            UIView *v = [list[index] copy];
-            [copylist addObject:v];
-        }
-    } else {
         
-        for (NSInteger i=0;i<listCount;i++) {
-            NSInteger index = i % listCount;
-            UIView *v = [list[index] copy];
-            [copylist addObject:v];
-        }
-//        // 前後３みつだけダミーに
-//        NSInteger dum = 5;
-//        for (int i=0;i<dum;i++) {
-//            [copylist addObject:[list[i] copy]];
-//        }
-//        for (int i=0;i<dum;i++) {
-//            NSInteger index = list.count - dum - 1 + i;
-//            [copylist addObject:[list[index] copy]];
-//        }
-    }
-    [list addObjectsFromArray:copylist];
- 
-    
-    [self.carousel updateContents:list dummyNumber:[copylist count]];
-}
+    [self.carousel updateContents:list];
+ }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
